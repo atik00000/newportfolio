@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atik — Software Engineer & Creative Developer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --bg: #0B0E14;
+    --bg-panel: #12161F;
+    --bg-panel-2: #171C28;
+    --line: #262C3A;
+    --text: #E7E9EE;
+    --text-dim: #8B93A6;
+    --accent: #E8A33D;
+    --accent-2: #4FB8A6;
+    --radius-sm: 4px;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+  }
+  ::selection{ background: var(--accent); color: #0B0E14; }
+  .mono{ font-family: 'JetBrains Mono', monospace; }
+  a{ color: inherit; text-decoration: none; }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 6vw;
+    background: linear-gradient(to bottom, rgba(11,14,20,0.9), transparent);
+  }
+  .nav-name{
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+  }
+  .nav-name span{ color: var(--accent); }
+  .nav-links{
+    display: flex;
+    gap: 32px;
+    font-size: 0.92rem;
+    color: var(--text-dim);
+  }
+  .nav-links a:hover{ color: var(--text); }
+  @media (max-width: 700px){
+    .nav-links{ display: none; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 6vw;
+  }
+  #hero-canvas{
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+  }
+  .hero-content{
+    position: relative;
+    z-index: 2;
+    max-width: 640px;
+  }
+  .hero-eyebrow{
+    color: var(--accent-2);
+    font-size: 0.85rem;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .dot-live{
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent-2);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%{ box-shadow: 0 0 0 0 rgba(79,184,166,0.5); }
+    70%{ box-shadow: 0 0 0 8px rgba(79,184,166,0); }
+    100%{ box-shadow: 0 0 0 0 rgba(79,184,166,0); }
+  }
+  .hero h1{
+    font-size: clamp(2.6rem, 6vw, 4.4rem);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .hero p{
+    margin-top: 22px;
+    font-size: 1.08rem;
+    color: var(--text-dim);
+    max-width: 480px;
+    line-height: 1.65;
+  }
+  .hero-cta{
+    margin-top: 36px;
+    display: flex;
+    gap: 16px;
+  }
+  .btn{
+    padding: 13px 26px;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: transform 0.15s ease, background 0.15s ease;
+    cursor: pointer;
+    border: 1px solid var(--line);
+  }
+  .btn-primary{
+    background: var(--accent);
+    color: #0B0E14;
+    border: none;
+  }
+  .btn-primary:hover{ transform: translateY(-2px); }
+  .btn-ghost:hover{ border-color: var(--text-dim); transform: translateY(-2px); }
+
+  .scroll-hint{
+    position: absolute;
+    bottom: 36px; left: 6vw;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .scroll-line{
+    width: 32px; height: 1px;
+    background: var(--text-dim);
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{
+    padding: 110px 6vw;
+    position: relative;
+  }
+  .section-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 56px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 22px;
+  }
+  .section-head h2{
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 600;
+  }
+  .section-num{
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+  }
+  .about-grid p{
+    color: var(--text-dim);
+    line-height: 1.8;
+    font-size: 1.02rem;
+    margin-bottom: 18px;
+  }
+  .about-stats{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-content: start;
+  }
+  .stat{
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 22px;
+    background: var(--bg-panel);
+  }
+  .stat .num{
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .stat .label{
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-top: 6px;
+  }
+  @media (max-width: 800px){
+    .about-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skills-wrap{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+  }
+  .skill-row{ margin-bottom: 26px; }
+  .skill-top{
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.92rem;
+    margin-bottom: 9px;
+  }
+  .skill-top .pct{
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-dim);
+  }
+  .skill-track{
+    height: 6px;
+    background: var(--bg-panel-2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .skill-fill{
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent-2), var(--accent));
+    width: 0%;
+    transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .tools-label{
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+  }
+  .tools-cloud{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-content: flex-start;
+  }
+  .tool-chip{
+    padding: 9px 16px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg-panel);
+  }
+  @media (max-width: 800px){
+    .skills-wrap{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .projects-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .project-card{
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 28px;
+    background: var(--bg-panel);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .project-card:hover{
+    border-color: var(--accent-2);
+    transform: translateY(-4px);
+  }
+  .project-tag{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent-2);
+    margin-bottom: 14px;
+    display: block;
+  }
+  .project-card h3{
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .project-card p{
+    color: var(--text-dim);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+  @media (max-width: 900px){
+    .projects-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- EXPERIENCE ---------- */
+  .timeline{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .timeline-item{
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 32px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .timeline-item:last-child{ border-bottom: none; }
+  .timeline-date{
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    padding-top: 3px;
+  }
+  .timeline-role h3{
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .timeline-role .company{
+    color: var(--accent-2);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+  .timeline-role p{
+    color: var(--text-dim);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    max-width: 640px;
+  }
+  @media (max-width: 700px){
+    .timeline-item{ grid-template-columns: 1fr; gap: 8px; }
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact-inner{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .contact-inner h2{
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    max-width: 700px;
+    line-height: 1.15;
+  }
+  .contact-inner h2 a{
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+  }
+  .contact-meta{
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .contact-meta a{
+    color: var(--text-dim);
+    font-size: 0.92rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .contact-meta a:hover{ color: var(--text); }
+
+  footer{
+    padding: 28px 6vw 40px;
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-dim);
+    font-size: 0.82rem;
+    border-top: 1px solid var(--line);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-name">Atik <span>.dev</span></div>
+  <div class="nav-links mono">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#work">Work</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-eyebrow mono"><span class="dot-live"></span> AVAILABLE FOR NEW PROJECTS</div>
+    <h1>Atik.<br>Software Engineer<br>& Creative Developer.</h1>
+    <p>I build things with code, and I like making those things move. Web applications, interactive 3D experiences, and performance-focused software are where I spend most of my time.</p>
+    <div class="hero-cta">
+      <a href="#work" class="btn btn-primary">View Work</a>
+      <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+  <div class="scroll-hint mono"><span class="scroll-line"></span> SCROLL</div>
+</section>
+
+<section id="about">
+  <div class="section-head">
+    <h2>About</h2>
+    <div class="section-num mono">01 / About</div>
+  </div>
+  <div class="about-grid">
+    <div>
+      <p>I'm Atik, a software developer who treats code as a craft rather than just a means to an end. It started with small scripts and side projects, and has grown into building full web applications and interactive 3D experiences for clients and teams.</p>
+      <p>My focus is turning complex problems into fast, reliable, and well-designed solutions. On every project I try to give equal weight to how something works and how it feels to use — because a good product needs both.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat">
+        <div class="num mono">3+</div>
+        <div class="label">Years of experience</div>
+      </div>
+      <div class="stat">
+        <div class="num mono">20+</div>
+        <div class="label">Projects delivered</div>
+      </div>
+      <div class="stat">
+        <div class="num mono">10+</div>
+        <div class="label">Technologies used</div>
+      </div>
+      <div class="stat">
+        <div class="num mono">100%</div>
+        <div class="label">Client focus</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-head">
+    <h2>Skills</h2>
+    <div class="section-num mono">02 / Skills</div>
+  </div>
+  <div class="skills-wrap">
+    <div>
+      <div class="skill-row">
+        <div class="skill-top"><span>JavaScript / TypeScript</span><span class="pct">92%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-width="92"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-top"><span>Three.js / WebGL</span><span class="pct">88%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-width="88"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-top"><span>React / Next.js</span><span class="pct">85%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-width="85"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-top"><span>Python</span><span class="pct">80%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-width="80"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-top"><span>UI / Motion Design</span><span class="pct">75%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-width="75"></div></div>
+      </div>
+    </div>
+    <div>
+      <p class="tools-label mono">TOOLS &amp; TECHNOLOGY</p>
+      <div class="tools-cloud">
+        <span class="tool-chip">Node.js</span>
+        <span class="tool-chip">Blender</span>
+        <span class="tool-chip">GLSL</span>
+        <span class="tool-chip">GSAP</span>
+        <span class="tool-chip">MongoDB</span>
+        <span class="tool-chip">PostgreSQL</span>
+        <span class="tool-chip">Docker</span>
+        <span class="tool-chip">Git</span>
+        <span class="tool-chip">Figma</span>
+        <span class="tool-chip">Tailwind CSS</span>
+        <span class="tool-chip">WebSocket</span>
+        <span class="tool-chip">REST / GraphQL</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="section-head">
+    <h2>Selected Work</h2>
+    <div class="section-num mono">03 / Projects</div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card">
+      <span class="project-tag mono">WEBGL</span>
+      <h3>Interactive Product Viewer</h3>
+      <p>A real-time 3D product viewer built with Three.js, letting users rotate and inspect every detail of a product before purchase.</p>
+    </div>
+    <div class="project-card">
+      <span class="project-tag mono">FULL-STACK</span>
+      <h3>Task Automation Platform</h3>
+      <p>A team productivity tool built with React and Node.js, featuring real-time sync and configurable custom workflows.</p>
+    </div>
+    <div class="project-card">
+      <span class="project-tag mono">DATA VISUALIZATION</span>
+      <h3>3D Data Explorer</h3>
+      <p>A tool that turns large datasets into a navigable 3D visualization, built to make exploratory analysis more intuitive.</p>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-head">
+    <h2>Experience</h2>
+    <div class="section-num mono">04 / Experience</div>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date mono">2024 — Present</div>
+      <div class="timeline-role">
+        <h3>Software Engineer</h3>
+        <div class="company">Freelance / Contract</div>
+        <p>Building web applications and interactive 3D experiences for clients across e-commerce, product visualization, and internal tooling.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date mono">2022 — 2024</div>
+      <div class="timeline-role">
+        <h3>Frontend Developer</h3>
+        <div class="company">Independent Projects</div>
+        <p>Focused on React-based applications, animation systems, and design implementation for product teams and small businesses.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date mono">2021 — 2022</div>
+      <div class="timeline-role">
+        <h3>Junior Developer</h3>
+        <div class="company">Self-directed learning &amp; projects</div>
+        <p>Built foundational skills in JavaScript, backend development, and version control while shipping small tools and scripts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-num mono">05 / Contact</div>
+    <h2>Have a project in mind? <a href="mailto:atik@example.com">Let's talk →</a></h2>
+    <div class="contact-meta">
+      <a href="mailto:atik@example.com">atik@example.com</a>
+      <a href="#" target="_blank">GitHub</a>
+      <a href="#" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="mono">© 2026 Atik</span>
+  <span class="mono">Built with Three.js</span>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  // ---------- 3D HERO ANIMATION ----------
+  const canvas = document.getElementById('hero-canvas');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.set(0, 0, 9);
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  const geo = new THREE.IcosahedronGeometry(2.6, 1);
+  const mat = new THREE.MeshBasicMaterial({ color: 0xE8A33D, wireframe: true, transparent: true, opacity: 0.55 });
+  const core = new THREE.Mesh(geo, mat);
+  scene.add(core);
+
+  const geo2 = new THREE.IcosahedronGeometry(2.6, 0);
+  const mat2 = new THREE.MeshBasicMaterial({ color: 0x4FB8A6, wireframe: true, transparent: true, opacity: 0.3 });
+  const core2 = new THREE.Mesh(geo2, mat2);
+  scene.add(core2);
+
+  const particleCount = 260;
+  const particleGeo = new THREE.BufferGeometry();
+  const positions = new Float32Array(particleCount * 3);
+  for (let i = 0; i < particleCount; i++) {
+    positions[i * 3] = (Math.random() - 0.5) * 22;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 14;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 14;
+  }
+  particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const particleMat = new THREE.PointsMaterial({ color: 0x8B93A6, size: 0.035, transparent: true, opacity: 0.6 });
+  const particles = new THREE.Points(particleGeo, particleMat);
+  scene.add(particles);
+
+  let mouseX = 0, mouseY = 0;
+  window.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    core.rotation.x += 0.0018;
+    core.rotation.y += 0.0026;
+    core2.rotation.x -= 0.001;
+    core2.rotation.y -= 0.0015;
+    particles.rotation.y += 0.0004;
+
+    camera.position.x += (mouseX * 1.2 - camera.position.x) * 0.02;
+    camera.position.y += (-mouseY * 1.2 - camera.position.y) * 0.02;
+    camera.lookAt(scene.position);
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  // ---------- SKILL BAR REVEAL ----------
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.querySelectorAll('.skill-fill').forEach(fill => {
+          fill.style.width = fill.dataset.width + '%';
+        });
+        skillObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  const skillsSection = document.getElementById('skills');
+  if (skillsSection) skillObserver.observe(skillsSection);
+</script>
+
+</body>
+</html>
